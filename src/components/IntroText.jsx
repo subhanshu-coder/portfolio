@@ -1,40 +1,65 @@
 import { useEffect, useState } from 'react';
+import './IntroText.css';
 
 export default function IntroText() {
   const [visible, setVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth <= 768);
 
   useEffect(() => {
     const timer = setTimeout(() => setVisible(true), 600);
     return () => clearTimeout(timer);
   }, []);
 
+  useEffect(() => {
+    function checkMobile() {
+      const width = window.innerWidth;
+      setIsMobile(width <= 768);
+    }
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    window.addEventListener('orientationchange', checkMobile);
+    
+    // Polling for DevTools device toggle
+    const interval = setInterval(checkMobile, 100);
+    
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+      window.removeEventListener('orientationchange', checkMobile);
+      clearInterval(interval);
+    };
+  }, []);
+
   return (
     <div
+      className="intro-wrapper"
       style={{
         ...container,
         opacity: visible ? 1 : 0,
-        transform: visible ? 'translate(-50%, -50%)' : 'translate(-50%, -40%)',
+        transform: visible ? 'translate(-50%, -50%)' : 'translate(-50%, -45%)',
         transition: 'opacity 1s ease, transform 1s ease',
       }}
     >
-      <div style={titleBoxStyle}>
-        <span style={mainTitleStyle}>I am&nbsp;</span>
-        <span style={cursiveNameStyle}>Subhanshu Pal</span>
+      <div style={isMobile ? titleBoxStyleMobile : titleBoxStyle}>
+        <span style={isMobile ? mainTitleStyleMobile : mainTitleStyle}>I am</span>
+        <span style={isMobile ? cursiveNameStyleMobile : cursiveNameStyle}>Subhanshu Pal</span>
       </div>
-      <p style={subtitleStyle}>
-        Passionate about crafting beautiful and intuitive digital experiences.<br />
-        Dedicated coder with a love for solving complex problems.<br />
+      <p style={isMobile ? subtitleStyleMobile : subtitleStyle}>
+        Passionate about crafting beautiful and intuitive digital experiences.
+        <br />
+        Dedicated coder with a love for solving complex problems.
+        <br />
         Always eager to learn and innovate in the world of technology.
       </p>
-      <div style={buttonRowStyle}>
+      <div style={isMobile ? buttonRowStyleMobile : buttonRowStyle}>
         <button
-          style={buttonStyle}
+          style={isMobile ? buttonStyleMobile : buttonStyle}
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
         >
           Contact Me
         </button>
         <button
-          style={buttonStyleAlt}
+          style={isMobile ? buttonStyleAltMobile : buttonStyleAlt}
           onClick={() => alert('Portfolio coming soon!')}
         >
           Portfolio
@@ -46,10 +71,10 @@ export default function IntroText() {
 
 const container = {
   position: 'fixed',
-  top: '60%',
+  top: '50%',
   left: '50%',
   maxWidth: 800,
-  width: '85vw',
+  width: 'clamp(85%, 90%, 95%)',
   textAlign: 'center',
   color: '#fff',
   userSelect: 'none',
@@ -58,18 +83,20 @@ const container = {
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
+  padding: '0 clamp(10px, 3vw, 20px)',
+  boxSizing: 'border-box',
 };
 
+// Desktop Styles
 const titleBoxStyle = {
   display: 'flex',
   flexWrap: 'wrap',
   alignItems: 'baseline',
   justifyContent: 'center',
   fontWeight: 900,
-  fontSize: '4rem',
   marginBottom: 20,
-  lineHeight: 1.05,
-  gap: '8px',
+  lineHeight: 1.1,
+  gap: '12px',
 };
 
 const mainTitleStyle = {
@@ -84,16 +111,15 @@ const cursiveNameStyle = {
   color: '#00ffcc',
   fontWeight: 800,
   fontSize: '5rem',
-  marginLeft: '4px',
   letterSpacing: '.5px',
 };
 
 const subtitleStyle = {
-  fontSize: '1.40rem',
-  fontWeight: 400,
-  lineHeight: 1.5,
+  fontSize: '1.3em',
+  fontWeight: 500,
+  lineHeight: 1.4,
   fontFamily: "'Poppins', 'DM Sans', Arial, sans-serif",
-  margin: '10px 0 36px 0',
+  margin: '10px 0px 46px 0',
   maxWidth: 800,
 };
 
@@ -102,6 +128,7 @@ const buttonRowStyle = {
   gap: '26px',
   justifyContent: 'center',
   pointerEvents: 'auto',
+  flexWrap: 'wrap',
 };
 
 const buttonStyle = {
@@ -119,6 +146,74 @@ const buttonStyle = {
 
 const buttonStyleAlt = {
   ...buttonStyle,
+  color: '#00ffcc',
+  backgroundColor: 'transparent',
+  border: '2px solid #00ffcc',
+};
+
+// Mobile Styles
+const titleBoxStyleMobile = {
+  display: 'flex',
+  flexWrap: 'wrap',
+  alignItems: 'baseline',
+  justifyContent: 'center',
+  fontWeight: 900,
+  marginBottom: 15,
+  lineHeight: 1.2,
+  gap: '6px',
+};
+
+const mainTitleStyleMobile = {
+  fontFamily: "'Poppins', 'DM Sans', Arial, sans-serif",
+  color: '#fff',
+  fontWeight: 800,
+  fontSize: 'clamp(2rem, 8vw, 2.5rem)',
+};
+
+const cursiveNameStyleMobile = {
+  fontFamily: "'Pacifico', cursive",
+  color: '#00ffcc',
+  fontWeight: 800,
+  fontSize: 'clamp(2rem, 8vw, 2.5rem)',
+  letterSpacing: '.3px',
+};
+
+const subtitleStyleMobile = {
+  fontSize: 'clamp(0.875rem, 3.5vw, 1rem)',
+  fontWeight: 400,
+  lineHeight: 1.6,
+  fontFamily: "'Poppins', 'DM Sans', Arial, sans-serif",
+  margin: '15px 0 30px 0',
+  maxWidth: '100%',
+};
+
+const buttonRowStyleMobile = {
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '15px',
+  justifyContent: 'center',
+  alignItems: 'center',
+  pointerEvents: 'auto',
+  width: '100%',
+};
+
+const buttonStyleMobile = {
+  padding: '14px 0',
+  fontSize: '1rem',
+  fontWeight: 600,
+  backgroundColor: '#00ffcc',
+  border: 'none',
+  borderRadius: 7,
+  cursor: 'pointer',
+  color: '#222',
+  boxShadow: '0 1px 12px 0 rgba(0,0,0,0.10)',
+  transition: 'background-color 0.3s',
+  width: '100%',
+  maxWidth: '320px',
+};
+
+const buttonStyleAltMobile = {
+  ...buttonStyleMobile,
   color: '#00ffcc',
   backgroundColor: 'transparent',
   border: '2px solid #00ffcc',
