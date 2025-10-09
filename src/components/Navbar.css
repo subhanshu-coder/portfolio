@@ -1,0 +1,220 @@
+.navbar {
+  position: fixed;
+  top: 0; left: 0;
+  width: 80vw;
+  display: flex; align-items: center; justify-content: space-between;
+  z-index: 1000;
+  background: transparent;
+  font-family: 'Inter', Arial, sans-serif;
+  padding: 60px 36px 0 150px;
+}
+.navbar-logo { width: 42px; }
+.navbar-logo img { width: 42px; height: 42px; display: block; cursor: pointer; }
+
+/* Large screens */
+.navbar-links {
+  display: flex; gap: 32px;
+  list-style: none;
+  margin: 0; padding: 0;
+}
+.navbar-links li a {
+  font-size: 1.17rem;
+  color: #fff;
+  font-style: italic;
+  font-weight: 500;
+  text-decoration: none;
+  position: relative;
+  letter-spacing: 0.01em;
+  padding: 4px 7px;
+  border-radius: 3px;
+  transition: color 0.23s, background 0.25s;
+}
+.navbar-links li a.active,
+.navbar-links li a:hover {
+  color: #11ffee;
+}
+.underline {
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 2px;
+  background: #11ffee;
+  border-radius: 1px;
+}
+
+/* Hamburger */
+.navbar-hamburger {
+  background: none;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 20001;
+  margin-left: auto;
+}
+.hamburger-lines {
+  width: 22px;
+  height: 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.hamburger-lines span {
+  height: 2px;
+  width: 22px;
+  background: #fff;
+  border-radius: 2px;
+}
+
+.close-circle {
+  position: relative;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.close-x {
+  width: 22px;
+  height: 22px;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.close-x:after,
+.close-x:before {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 3px;
+  width: 2px;
+  height: 15px;
+  background: #222;
+  border-radius: 2px;
+}
+.close-x:before { transform: rotate(45deg); }
+.close-x:after { transform: rotate(-45deg); }
+
+/* Fullscreen menu mobile */
+.navbar-mobile-panel {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateX(100%);
+  opacity: 0;
+  pointer-events: none;
+  transition: none;
+}
+.navbar-mobile-content {
+  width: 90vw;
+  max-width: 440px;
+  margin: auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 10px;
+}
+.navbar-mobile-panel[aria-hidden="false"] {
+  pointer-events: auto;
+  opacity: 1;
+  transform: translateX(0);
+}
+.navbar-mobile-links {
+  margin: 22px 0 31px 0;
+  padding: 0;
+  list-style: none;
+}
+.navbar-mobile-links li {
+  margin-bottom: 31px;
+}
+.navbar-mobile-links a {
+  font-size: 1.79rem;
+  color: #222;
+  font-style: italic;
+  font-weight: 500;
+  text-decoration: none;
+  position: relative;
+  padding: 2px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.01em;
+  display: inline-block;
+  transition: color 0.22s;
+}
+.navbar-mobile-links a.active,
+.navbar-mobile-links a:hover {
+  color: #05e6c7;
+}
+.navbar-mobile-links .underline {
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 100%;
+  height: 2px;
+  background: #05e6c7;
+  border-radius: 2px;
+}
+.mobile-logo {
+  display: block;
+  margin-bottom: 20px;
+}
+.mobile-logo img {
+  width: 36px;
+  height: 36px;
+  filter: brightness(0); /* Black logo on mobile panel */
+  cursor: pointer;
+}
+.navbar-footer {
+  margin-top: 40px;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+.navbar-footer a img {
+  width: 24px;
+  height: 24px;
+  filter: grayscale(100%);
+  transition: filter 0.3s;
+}
+.navbar-footer a:hover img {
+  filter: none;
+}
+
+/* Responsive small screen improvements */
+@media (max-width: 900px) {
+  .navbar {
+    width: 85vw;
+    padding: 40px 30px;
+    justify-content: space-between;
+  }
+  .navbar-logo {
+    width: 36px;
+  }
+  .navbar-logo img {
+    width: 40px;
+    height: 40px;
+  }
+  .navbar-hamburger {
+    width: 40px;
+    height: 40px;
+    margin-left: 0;
+  }
+  .hamburger-lines {
+    width: 18px;
+    height: 18px;
+  }
+  .hamburger-lines span {
+    width: 18px;
+    height: 2px;
+  }
+}
+
