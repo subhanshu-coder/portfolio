@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
+  base: '/3dportfolio/', 
   plugins: [react()],
-  base: '/3dportfolio/', // This must match your repository name!
+  // This must match your repository name!
 });
