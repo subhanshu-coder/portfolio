@@ -1,7 +1,9 @@
+// vite.config.js
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
-  base: '/3dportfolio/',
-  plugins: [react()]
+  plugins: [react()],
+  // Set the base public path to the name of your deployment subdirectory
+  base: '/3dportfolio/', 
 });
