@@ -16,10 +16,12 @@
     "@react-spring/web": "^10.0.3",
     "@react-three/drei": "^10.7.6",
     "@react-three/fiber": "^9.3.0",
+    "@react-three/rapier": "^2.1.0",
     "gsap": "^3.13.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-router-dom": "^7.9.4",
+    "react-router-hash-link": "^2.4.3",
     "route": "^0.2.5",
     "three": "^0.180.0"
   },
