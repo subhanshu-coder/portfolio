@@ -83,7 +83,7 @@ export default function Navbar() {
       }}
     >
       <div className="navbar-logo" onClick={() => handleScrollTo("home", "Home")} style={{ cursor: 'pointer' }}>
-        <img src={logo} alt="Logo" style={{ height: "20px" }} />
+        <img src="/logo.png" alt="Logo" style={{ height: "20px" }} />
       </div>
 
       <ul className="navbar-links" style={{ display: isMobile ? 'none' : 'flex' }}>
