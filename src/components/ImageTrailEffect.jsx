@@ -297,7 +297,7 @@ export default function ImageTrailEffect() {
           style={styles.primaryButton}
   onClick={() => {
     // Vite needs the base path prefix to find the file in the public folder
-    window.open('/3dportfolio/Resume_Subhanshu_Pal.pdf', '_blank');
+    window.open('./Resume_Subhanshu_Pal.pdf', '_blank');
   }}
 >
             View Resume
