@@ -87,27 +87,31 @@ export default function Work() {
     : projects.filter(p => p.category === filter);
 
   // --- STYLES ---
-  const containerStyle = {
-    minHeight: "100vh",
-    width: "100%",
-    // CHANGED: Updated background to match image style (off-white with diagonal lines)
-    backgroundColor: "#c4d6d3ff", 
-    backgroundImage: `repeating-linear-gradient(
-        45deg,
-        transparent,
-        transparent 190px,
-        rgba(101, 98, 98, 0.03) 300px,
-        rgba(116, 114, 114, 0.03) 45px
-      )`,
-    padding: isMobile ? "80px 20px" : "120px 10%",
-    boxSizing: "border-box",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    position: "relative",
-    zIndex: 10, 
-    paddingBottom: "100px"
-  };
+const containerStyle = {
+  minHeight: "100vh",
+  width: "100%",
+  // Background
+  backgroundColor: "#c4d6d3ff", 
+  backgroundImage: `repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 190px,
+      rgba(101, 98, 98, 0.03) 300px,
+      rgba(116, 114, 114, 0.03) 45px
+    )`,
+  // Corrected Padding logic
+  paddingTop: isMobile ? "80px" : "100px",
+  paddingLeft: isMobile ? "20px" : "10%",
+  paddingRight: isMobile ? "20px" : "10%",
+  paddingBottom: "120px", // Now this is the ONLY property setting the bottom padding
+  
+  boxSizing: "border-box",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  position: "relative",
+  zIndex: 10, 
+};
 
   const headerStyle = {
     textAlign: "center",

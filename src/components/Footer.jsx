@@ -179,7 +179,7 @@ const styles = {
     borderTopLeftRadius: "50px", // High radius for the curve
     borderTopRightRadius: "50px",
     marginTop: "-30px", // This pulls the footer UP over the previous section
-    padding: "150px 5% 40px 5%", // Extra top padding to account for the curve
+    padding: "150px 5% 100px 5%", // Extra top padding to account for the curve
     
     color: "#fff",
     fontFamily: "'Inter', sans-serif",
