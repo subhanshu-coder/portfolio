@@ -1,11 +1,12 @@
-import React from 'react'; // Often good practice to import React
-import ReactDOM from 'react-dom/client'; // <--- **Add this line**
+import React from 'react';
+import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
-import App from './App'; // Assuming App is in './App'
+import App from './App';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter basename="/3dportfolio">
+    {/* REMOVED basename="/3dportfolio" */}
+    <BrowserRouter>
       <App />
     </BrowserRouter>
   </React.StrictMode>
