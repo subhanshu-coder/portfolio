@@ -13,7 +13,7 @@ import {
 } from '@react-three/rapier';
 import { MeshLineGeometry, MeshLineMaterial } from 'meshline';
 import * as THREE from 'three';
-import './Lanyard.css';
+// import './Lanyard.css';
 
 extend({ MeshLineGeometry, MeshLineMaterial });
 
