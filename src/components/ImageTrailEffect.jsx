@@ -153,25 +153,15 @@ export default function ImageTrailEffect() {
       const width = window.innerWidth;
       setIsMobile(width <= 768);
     }
-
     checkMobile();
     window.addEventListener('resize', checkMobile);
-    window.addEventListener('orientationchange', checkMobile);
-
-    const interval = setInterval(checkMobile, 100);
-
-    return () => {
-      window.removeEventListener('resize', checkMobile);
-      window.removeEventListener('orientationchange', checkMobile);
-      clearInterval(interval);
-    };
+    return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
   useEffect(() => {
     if (containerRef.current && trailImages.length > 0) {
       trailInstanceRef.current = new ImageTrail(containerRef.current);
     }
-
     return () => {
       if (trailInstanceRef.current) {
         trailInstanceRef.current.destroy();
@@ -183,7 +173,7 @@ export default function ImageTrailEffect() {
     <div style={{
       position: 'relative',
       width: '100%',
-      height: '100%',
+      height: '100vh',
       overflow: 'hidden',
     }}>
       {/* Image Trail Container */}
@@ -198,7 +188,7 @@ export default function ImageTrailEffect() {
           height: '100vh',
           overflow: 'hidden',
           pointerEvents: 'auto',
-          zIndex: 15,
+          zIndex: 5,
         }}
       >
         {trailImages.map((src, index) => (
@@ -232,11 +222,11 @@ export default function ImageTrailEffect() {
         ))}
       </div>
 
-      {/* Main Text Content Container */}
+      {/* Main Text & Buttons Content Container */}
       <div
         style={{
           position: 'absolute',
-          top: '60%',
+          top: '55%',
           left: '50%',
           transform: visible ? 'translate(-50%, -50%)' : 'translate(-50%, -45%)',
           opacity: visible ? 1 : 0,
@@ -245,13 +235,13 @@ export default function ImageTrailEffect() {
           width: 'clamp(85%, 90%, 95%)',
           textAlign: 'center',
           color: '#fff',
-          userSelect: 'none',
-          zIndex: 10,
+          zIndex: 20, // Higher than trail to ensure clicks work
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           padding: '0 clamp(10px, 3vw, 20px)',
           boxSizing: 'border-box',
+          pointerEvents: 'none', // Allows trail to work through the container
         }}
       >
         {/* Name Title */}
@@ -267,159 +257,72 @@ export default function ImageTrailEffect() {
             gap: isMobile ? '6px' : '12px',
           }}
         >
-          <span
-            style={{
-              fontFamily: "'Poppins', 'DM Sans', Arial, sans-serif",
-              color: '#fff',
-              fontWeight: 800,
-              fontSize: isMobile ? 'clamp(2rem, 8vw, 2.5rem)' : '5rem',
-            }}
-          >
+          <span style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 800, fontSize: isMobile ? '2rem' : '5rem' }}>
             I am
           </span>
-          <span
-            style={{
-              fontFamily: "'Pacifico', cursive",
-              color: '#00ffcc',
-              fontWeight: 800,
-              fontSize: isMobile ? 'clamp(2rem, 8vw, 2.5rem)' : '5rem',
-              letterSpacing: isMobile ? '.3px' : '.5px',
-            }}
-          >
+          <span style={{ fontFamily: "'Pacifico', cursive", color: '#00ffcc', fontWeight: 800, fontSize: isMobile ? '2rem' : '5rem' }}>
             Subhanshu Pal
           </span>
         </div>
 
         {/* Description */}
-        <p
-          style={{
-            fontSize: isMobile ? 'clamp(0.875rem, 3.5vw, 1rem)' : '1.3em',
-            fontWeight: isMobile ? 400 : 500,
-            lineHeight: isMobile ? 1.6 : 1.4,
-            fontFamily: "'Poppins', 'DM Sans', Arial, sans-serif",
-            margin: isMobile ? '15px 0 30px 0' : '10px 0px 46px 0',
-            maxWidth: isMobile ? '100%' : 800,
-          }}
-        >
+        <p style={{
+          fontSize: isMobile ? '0.9rem' : '1.3em',
+          lineHeight: 1.6,
+          fontFamily: "'Poppins', sans-serif",
+          margin: '10px 0 30px 0',
+          maxWidth: 800,
+        }}>
           Passionate about crafting beautiful and intuitive digital experiences.
           <br />
           Dedicated coder with a love for solving complex problems.
-          <br />
-          Always eager to learn and innovate in the world of technology.
         </p>
 
-        {/* Buttons */}
+        {/* Buttons Container */}
         <div
           style={{
             display: 'flex',
             flexDirection: isMobile ? 'column' : 'row',
             gap: isMobile ? '15px' : '26px',
             justifyContent: 'center',
-            alignItems: isMobile ? 'center' : 'flex-start',
-            pointerEvents: 'auto',
+            alignItems: 'center',
+            pointerEvents: 'auto', // MUST BE AUTO TO CLICK
             width: isMobile ? '100%' : 'auto',
           }}
         >
-          {/* Contact Me Button */}
           <button
-            style={{
-              padding: isMobile ? '14px 0' : '14px 34px',
-              fontSize: '1rem',
-              fontWeight: 600,
-              backgroundColor: '#00ffcc',
-              border: 'none',
-              borderRadius: 7,
-              cursor: 'pointer',
-              color: '#222',
-              boxShadow: '0 1px 12px 0 rgba(0,0,0,0.10)',
-              transition: 'all 0.3s ease',
-              width: isMobile ? '100%' : 'auto',
-              maxWidth: isMobile ? '320px' : 'none',
-            }}
-            onClick={() => {
-              const aboutSection = document.querySelector('section[data-about]');
-              if (aboutSection) {
-                aboutSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-              }
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.backgroundColor = '#00e6b8';
-              e.target.style.transform = 'translateY(-2px)';
-              e.target.style.boxShadow = '0 4px 20px 0 rgba(0, 255, 204, 0.4)';
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.backgroundColor = '#00ffcc';
-              e.target.style.transform = 'translateY(0)';
-              e.target.style.boxShadow = '0 1px 12px 0 rgba(0,0,0,0.10)';
-            }}
-          >
-            About Me
+          //   style={styles.primaryButton}
+          //   onClick={() => window.open('/Resume_Subhanshu_Pal.pdf', '_blank')}
+          // >
+          style={styles.primaryButton}
+  onClick={() => {
+    // Vite needs the base path prefix to find the file in the public folder
+    window.open('/3dportfolio/Resume_Subhanshu_Pal.pdf', '_blank');
+  }}
+>
+            View Resume
           </button>
 
-          {/* Portfolio Button */}
           <button
-            style={{
-              padding: isMobile ? '14px 0' : '14px 34px',
-              fontSize: '1rem',
-              fontWeight: 600,
-              color: '#00ffcc',
-              backgroundColor: 'transparent',
-              border: '2px solid #00ffcc',
-              borderRadius: 7,
-              cursor: 'pointer',
-              boxShadow: '0 1px 12px 0 rgba(0,0,0,0.10)',
-              transition: 'all 0.3s ease',
-              width: isMobile ? '100%' : 'auto',
-              maxWidth: isMobile ? '320px' : 'none',
-            }}
-            onClick={() => alert('Portfolio coming soon!')}
-            onMouseEnter={(e) => {
-              e.target.style.backgroundColor = 'rgba(0, 255, 204, 0.1)';
-              e.target.style.transform = 'translateY(-2px)';
-              e.target.style.boxShadow = '0 4px 20px 0 rgba(0, 255, 204, 0.3)';
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.backgroundColor = 'transparent';
-              e.target.style.transform = 'translateY(0)';
-              e.target.style.boxShadow = '0 1px 12px 0 rgba(0,0,0,0.10)';
+            style={styles.secondaryButton}
+            onClick={() => {
+              const contactSection = document.getElementById('contact');
+              if (contactSection) contactSection.scrollIntoView({ behavior: 'smooth' });
             }}
           >
-            Portfolio
+            Get In Touch
           </button>
         </div>
 
         {/* Cursor Instruction Text */}
-        <div
-          style={{
-            marginTop: isMobile ? 35 : 60,
-            userSelect: 'none',
-            pointerEvents: 'none',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '8px',
-          }}
-        >
-          <style>
-            {`
-              @keyframes neon-pulse {
-                0%, 100% { text-shadow: 0 0 10px rgba(0, 255, 204, 0.6), 0 0 20px rgba(0, 255, 204, 0.3); }
-                50% { text-shadow: 0 0 15px rgba(0, 255, 204, 0.9), 0 0 30px rgba(0, 255, 204, 0.5); }
-              }
-            `}
-          </style>
-
-          <p
-            style={{
-              fontSize: isMobile ? '1rem' : '1.5rem',
-              fontWeight: 400,
-              color: 'rgba(255, 255, 255, 0.8)',
-              margin: 0,
-              fontFamily: "'Courier New', monospace",
-              letterSpacing: '3px',
-              textTransform: 'uppercase',
-            }}
-          >
+        <div style={{ marginTop: isMobile ? 35 : 60 }}>
+          <p style={{
+            fontSize: isMobile ? '0.8rem' : '1.2rem',
+            color: 'rgba(255, 255, 255, 0.6)',
+            fontFamily: "monospace",
+            letterSpacing: '3px',
+            textTransform: 'uppercase',
+          }}>
             Move the cursor, & Enjoy the Softness
           </p>
         </div>
@@ -427,3 +330,31 @@ export default function ImageTrailEffect() {
     </div>
   );
 }
+
+// Styles Definition to fix ReferenceError
+const styles = {
+  primaryButton: {
+    padding: '14px 34px',
+    fontSize: '1rem',
+    fontWeight: 600,
+    backgroundColor: '#00ffcc',
+    border: 'none',
+    borderRadius: '7px',
+    cursor: 'pointer',
+    color: '#222',
+    boxShadow: '0 1px 12px 0 rgba(0,0,0,0.10)',
+    transition: 'all 0.3s ease',
+  },
+  secondaryButton: {
+    padding: '14px 34px',
+    fontSize: '1rem',
+    fontWeight: 600,
+    color: '#00ffcc',
+    backgroundColor: 'transparent',
+    border: '2px solid #00ffcc',
+    borderRadius: '7px',
+    cursor: 'pointer',
+    boxShadow: '0 1px 12px 0 rgba(0,0,0,0.10)',
+    transition: 'all 0.3s ease',
+  }
+};

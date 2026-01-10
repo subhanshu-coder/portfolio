@@ -143,7 +143,7 @@ float cnoise(vec3 P){
 
 const Beams = ({
   beamWidth = 2,
-  beamHeight = 15,
+  beamHeight = 25,
   beamNumber = 12,
   lightColor = '#ffffff',
   speed = 2,
@@ -295,11 +295,11 @@ const DirLight = ({ position, color }) => {
     if (!dir.current) return;
     const cam = dir.current.shadow.camera;
     if (!cam) return;
-    cam.top = 24;
+    cam.top = 34;
     cam.bottom = -24;
     cam.left = -24;
     cam.right = 24;
-    cam.far = 64;
+    cam.far = 74;
     dir.current.shadow.bias = -0.004;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
